@@ -7,6 +7,10 @@ module Spinup
         Spinup.logger.info('Program finished')
         Spinup.logger.error('fatal error')
       end
+
+      def run
+
+      end
     end
   end
 end

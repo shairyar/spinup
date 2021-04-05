@@ -1,0 +1,3 @@
+aws:
+  ubuntu:
+    image_id: ami-06fd78dc2f0b69910

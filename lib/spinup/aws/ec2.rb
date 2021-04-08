@@ -12,6 +12,8 @@ module Spinup
 
         # Check whether the new instance is in the "running" state.
         check_instance_state(instance)
+
+        install_dependencies
       end
 
       def print_current_instance
@@ -39,7 +41,7 @@ module Spinup
 
       def create_ec2_instance
         Spinup.logger.debug("Creating ec2 instance with image_id: #{image_id}")
-        ec2.create_instances( image_id: image_id, instance_type: INSTANCE_TYPE, max_count: 1, min_count: 1 )
+        ec2.create_instances( image_id: image_id, instance_type: INSTANCE_TYPE, max_count: 1, min_count: 1, key_name: 'key_pair_name' )
       end
 
       def check_instance_state(instance)
@@ -92,6 +94,10 @@ module Spinup
       rescue StandardError => e
         puts "Error stopping instance: #{e.message}"
         return false
+      end
+
+      def install_dependencies
+        # code here
       end
 
     end

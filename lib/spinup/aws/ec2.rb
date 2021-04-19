@@ -8,6 +8,7 @@ module Spinup
       def initialize; end
 
       def run
+        key_pair = KeyPair.new.create
         instance = create_ec2_instance
 
         # Check whether the new instance is in the "running" state.
@@ -41,6 +42,8 @@ module Spinup
 
       def create_ec2_instance
         Spinup.logger.debug("Creating ec2 instance with image_id: #{image_id}")
+
+        # TODO: change the key_name to something dynamic or use ENV variable
         ec2.create_instances( image_id: image_id, instance_type: INSTANCE_TYPE, max_count: 1, min_count: 1, key_name: 'key_pair_name' )
       end
 

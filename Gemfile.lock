@@ -65,6 +65,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
+    ruby-progressbar (1.11.0)
     shellany (0.0.1)
     table_print (1.5.7)
     thor (1.1.0)
@@ -82,6 +83,7 @@ DEPENDENCIES
   rake
   rspec
   rspec-its
+  ruby-progressbar
   table_print
   zeitwerk
 

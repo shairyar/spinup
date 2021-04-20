@@ -1,10 +1,10 @@
-require 'zeitwerk'
-require 'logger'
 require 'aws-sdk-ec2'
-require 'yaml'
-require 'table_print'
+require 'logger'
 require 'pry'
-
+require 'ruby-progressbar'
+require 'table_print'
+require 'yaml'
+require 'zeitwerk'
 loader = Zeitwerk::Loader.new
 loader.push_dir('./lib')
 loader.setup

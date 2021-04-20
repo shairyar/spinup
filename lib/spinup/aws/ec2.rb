@@ -22,11 +22,12 @@ module Spinup
         tp ec2.instances, "image_id", "instance_type", "state"
       end
 
+      # TODO: Create one for terminating the instances as well
       def stop_all_instances
         Spinup.logger.info('Attempting to stop all running instances')
         running_instances = ec2.instances
 
-        Spinup.logger.info("#{running_instances.count} running instances")
+        Spinup.logger.info(" Found #{running_instances.count} running instances")
 
         running_instances.each do |running_instance|
           instance_stopped?(running_instance)
@@ -48,20 +49,23 @@ module Spinup
       end
 
       def check_instance_state(instance)
-        Spinup.logger.info('Checking instance status')
+        progressbar = ProgressBar.create
+        Spinup.logger.info("Spining up the instance #{instance.first.id} ")
         polls = 0
         loop do
+          progressbar.increment
           polls += 1
           response = ec2.client.describe_instances( instance_ids: [ instance.first.id ] )
           state = response.reservations[0].instances[0].state.name
-          Spinup.logger.debug("Instance stage: #{state}")
+          # Spinup.logger.debug("Instance stage: #{state}")
 
-          # Stop polling after 10 minutes (40 polls * 15 seconds per poll) if not running.
-          break if state == 'running' || polls > 40
+          # Stop the progress bar and polling after 10 minutes (400 polls * 2 seconds per poll) if not running.
+          break if state == 'running' || polls > 400
 
-          sleep(15)
+          sleep(2)
         end
 
+        progressbar.stop
         puts "Instance created with ID '#{instance.first.id}'."
         return instance
       end
